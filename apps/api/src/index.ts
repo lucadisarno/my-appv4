@@ -1,5 +1,7 @@
 import Fastify from "fastify"
 import cors from "@fastify/cors"
+import { auth } from "./auth.js"
+import { toNodeHandler } from "better-auth/node"
 
 const app = Fastify({ logger: true })
 
@@ -10,6 +12,12 @@ await app.register(cors, {
 
 app.get("/health", async () => {
   return { status: "ok" }
+})
+
+app.all("/auth/*", async (req, reply) => {
+  const handler = toNodeHandler(auth)
+  await handler(req.raw, reply.raw)
+  reply.hijack()
 })
 
 const port = Number(process.env.PORT) || 3001
