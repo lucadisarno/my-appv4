@@ -22,5 +22,9 @@ app.all("/auth/*", async (req, reply) => {
 
 const port = Number(process.env.PORT) || 3001
 
+import { postsRoutes } from "./routes/posts.js"
+
+app.register(postsRoutes, { prefix: "/api" })
+
 await app.listen({ port, host: "0.0.0.0" })
 console.log(`API attiva su http://localhost:${port}`)
