@@ -15,9 +15,7 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json ./
 
 # Copia i file di tutte le app dentro apps/
 COPY apps ./apps
-
-# Copia i file di tutti i package dentro packages/
-COPY packages ./packages
+COPY packages ./packages 2>/dev/null || true
 
 # Installa tutte le dipendenze
 # --frozen-lockfile = usa esattamente le versioni in pnpm-lock.yaml
